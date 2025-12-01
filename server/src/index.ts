@@ -7,9 +7,13 @@ import cp from 'cookie-parser'
 
 import connectDB from './utils/connectDB';
 import authRoutes from './routes/auth.route'
+import promptRoutes from './routes/prompt.route'
+import commentRoutes from './routes/comment.route'
+import sandboxRoutes from './routes/sandbox.route'
 
 import { notFound } from './middleware/not-found';
 import { errorHandler } from './middleware/error-handler';
+import { sessionVerify } from './middleware/sessionverify';
 
 const app = express();
 const PORT = process.env.PORT;
@@ -27,6 +31,10 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/api', authRoutes)
+app.use('/api', sessionVerify, promptRoutes)
+app.use('/api', sessionVerify, commentRoutes)
+app.use('/api', sessionVerify, sandboxRoutes)
+
 app.use(notFound);
 app.use(errorHandler);  
 
