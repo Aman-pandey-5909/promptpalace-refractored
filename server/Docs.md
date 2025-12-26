@@ -16,3 +16,5 @@ first login ----> saves user forever in db, if signed up but no login in first d
 
 ```
 - File contains 3 controllers ( register, login, verify )
+
+First change posts in user schema from num to arr, then store post id's in that, and when user loading, populate and return for easy thingy

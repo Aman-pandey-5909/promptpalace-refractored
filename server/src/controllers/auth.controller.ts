@@ -57,7 +57,7 @@ export const loginController = asyncHandler(async (req, res) => {
   await sendMail(
     useremail,
     "Verify your email",
-    `http://localhost:3000/verify/${token}`
+    `http://localhost:3000/auth/verify/${token}`
   ); // send email
 
   return res
@@ -89,12 +89,47 @@ export const verifyEmailController = asyncHandler(async (req, res) => {
   await updateUserByID(userid, { isVerified: true }); // update isVerified
 
   const cookieToken = generateToken(userid, "15d"); // generate cookie token
-  res.cookie("session", cookieToken, { maxAge: 1000 * 60 * 60 * 24 * 15 }); // set cookie
-
-  return res.status(200).json({ message: "Email verified successfully" });
+  res.cookie("session", cookieToken, { maxAge: 1000 * 60 * 60 * 24 * 15, httpOnly: true, sameSite:"strict", secure: true }); // set cookie
+  const returnData = {
+    username: user.username,
+    email: user.email,
+    role: user.role,
+    posts: user.posts,
+    reputation: user.reputation,
+    premiumUntil: user.premiumUntil,
+    createdAt: user.createdAt
+  }
+  return res.status(200).json({ message: "Email verified successfully", user: returnData });
 });
 
 export const logoutController = asyncHandler(async (req, res) => {
   res.clearCookie("session"); // clear cookie
   return res.status(200).json({ message: "Logout successful" });
+});
+
+export const getuserController = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.userid);
+  return res.status(200).json({ message: "User fetched successfully", user: {
+    username: user!.username,
+    email: user!.email,
+    role: user!.role,
+    posts: user!.posts,
+    reputation: user!.reputation,
+    premiumUntil: user!.premiumUntil,
+    createdAt: user!.createdAt
+  } });
+});
+
+
+export const getOtherUserController = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  return res.status(200).json({ message: "User fetched successfully", user: {
+    username: user!.username,
+    email: user!.email,
+    role: user!.role,
+    posts: user!.posts,
+    reputation: user!.reputation,
+    premiumUntil: user!.premiumUntil,
+    createdAt: user!.createdAt
+  } });
 });

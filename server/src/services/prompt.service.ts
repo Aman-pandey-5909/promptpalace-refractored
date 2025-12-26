@@ -17,7 +17,7 @@ export const getPrompts = async () => {
 };
 
 export const getPromptById = async (id: string) => {
-    const prompt = await Prompts.findById(id);
+    const prompt = await Prompts.findById(id).populate("comments");
     return prompt;
 };
 

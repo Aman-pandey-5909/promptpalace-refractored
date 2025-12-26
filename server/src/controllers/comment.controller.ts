@@ -9,23 +9,23 @@ export const createCommentController = async (req: any, res: any) => {
   await updatePrompt(req.params.id, { 
     $push: { comments: comment._id }
    });
-  return res.status(201).json(comment);
+  return res.status(201).json({ message: "Comment created successfully", comment });
 };
 
 export const getCommentsController = async (req: any, res: any) => {
   const comments = await getComments(req.params.id);
-  return res.status(200).json(comments);
+  return res.status(200).json({ message: "Comments fetched successfully", comments });
 };
 
 export const updateCommentController = async (req: any, res: any) => {
   const id = req.params.id;
   const data = req.body;
   const comment = await updateComment(id, data);
-  return res.status(200).json(comment);
+  return res.status(200).json({ message: "Comment updated successfully", comment });
 };
 
 export const deleteCommentController = async (req: any, res: any) => {
   const id = req.params.id;
   const comment = await deleteComment(id);
-  return res.status(200).json(comment);
+  return res.status(200).json({ message: "Comment deleted successfully"});
 };
