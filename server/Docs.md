@@ -1,20 +1,44 @@
-# Server For Promptpalace
+# PROMPTPALACE – Server
 
-### Files and their op
+Backend server for **PromptPalace**, a prompt-sharing web application where
+prompt engineers and users can share and use unique prompts.
 
-#### controllers/auth.controller.ts
-- Used for main Auth Route Logic
-- Email based login and signup (magic link)
-- user flow
+## Features
 
+- Magic Link Authentication
+- RBAC (User-private API & Public API)
+- Prompt CRUD
+- Comment CRUD
+- Efficient API responses
+
+## Installation
+
+```bash
+git clone "https://github.com/Aman-pandey-5909/promptpalace-refractored/tree/main/server"
+cd server
+npm install
+npm run dev     # Start development server
+npm run build   # Build for production
 ```
-/auth ----> user login (/api/login) ----> if acc deactivated (i.e. cookie is not recieved or is expired) (15 day ttl per session) ----> send verify link ----> verfied? set cookie and login
 
-/auth ----> user signup (/api/register) ----> save in db as unverified (ttl 1 day) ----> route to /login
+## Tech Stack
 
-first login ----> saves user forever in db, if signed up but no login in first day ----> signup again
+- TypeScript
 
-```
-- File contains 3 controllers ( register, login, verify )
+- Express
 
-First change posts in user schema from num to arr, then store post id's in that, and when user loading, populate and return for easy thingy
+- MongoDB & Mongoose
+
+- JSON Web Tokens (JWT)
+
+- bcrypt
+
+- Zod (validation)
+
+- dotenv, cors
+
+- cookie-parser
+
+
+## License
+This project is licensed under the MIT License.
