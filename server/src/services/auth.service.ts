@@ -26,7 +26,7 @@ export const createUser = async (data: any) => {
 };
 
 export const updateUserByID = async (id: string, data: any) => {
-    const user = User.findByIdAndUpdate(id, data, { new: true });
+    const user = User.findByIdAndUpdate(id, data, { new: true }).populate("prompts");
     return user;
 };
 

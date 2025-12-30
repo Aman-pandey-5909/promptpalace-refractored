@@ -6,24 +6,37 @@ import {
   updatePrompt,
   deletePrompt,
 } from "../services/prompt.service";
+import User from "../models/User";
 
 // get all prompts
 export const getPromptsController = asyncHandler(async (req, res) => {
   const prompts = await getPrompts();
-  return res.status(200).json({ message: "Prompts fetched successfully", prompts });
+  return res
+    .status(200)
+    .json({ message: "Prompts fetched successfully", prompts });
 });
 
 // create prompt
 export const createPromptController = asyncHandler(async (req, res) => {
   req.body.authorName = req.username;
+  req.body.author = req.userid;
   const prompt = await createPrompt(req.body);
-  return res.status(201).json({ message: "Prompt created successfully", prompt: prompt });
+  await User.findOneAndUpdate(
+    { _id: req.userid },
+    { $push: { prompts: prompt._id } }
+  );
+  return res
+    .status(201)
+    .json({ message: "Prompt created successfully", prompt: prompt });
 });
 
 export const getPromptByIdController = asyncHandler(async (req, res) => {
-  console.log(req.params.id);
+  // console.log(req.user);
   const prompt = await getPromptById(req.params.id);
-  return res.status(200).json({ message: "Prompt fetched successfully", prompt });
+  console.log(prompt);
+  return res
+    .status(200)
+    .json({ message: "Prompt fetched successfully", prompt });
 });
 
 // edit prompt (patch)
@@ -31,7 +44,9 @@ export const editPromptController = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const data = req.body;
   const prompt = await updatePrompt(id, data);
-  return res.status(200).json({ message: "Prompt updated successfully", prompt });
+  return res
+    .status(200)
+    .json({ message: "Prompt updated successfully", prompt });
 });
 
 // delete prompt
@@ -41,7 +56,7 @@ export const deletePromptController = asyncHandler(async (req, res) => {
   return res.status(200).json({ message: "Prompt deleted successfully" });
 });
 
-// For like, implementan array of users who have liked it instead of this, so that each user can like only once and prevent likes spam via bots and shi
+// For like, implement an array of users who have liked it instead of this, so that each user can like only once and prevent likes spam via bots and shi
 export const toggleLikeController = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const userid = req.userid;

@@ -23,9 +23,10 @@ const userSchema = new mongoose.Schema({
         enum: ["user", "admin"],
         default: "user"
     },
-    posts: {
-        type: Number,
-        default: 0
+    prompts: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "Prompt",
+        default: []
     },
     reputation: {
         type: Number,

@@ -10,6 +10,13 @@ prompt engineers and users can share and use unique prompts.
 - Prompt CRUD
 - Comment CRUD
 - Efficient API responses
+- MVC Architecture
+
+## Database Design
+
+- MongoDB with Mongoose ODM
+- User–Prompt–Comment relationships
+- Nested comments with self-referencing replies
 
 ## Installation
 

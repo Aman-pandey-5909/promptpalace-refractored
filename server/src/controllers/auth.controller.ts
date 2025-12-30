@@ -94,7 +94,7 @@ export const verifyEmailController = asyncHandler(async (req, res) => {
     username: user.username,
     email: user.email,
     role: user.role,
-    posts: user.posts,
+    posts: user.prompts,
     reputation: user.reputation,
     premiumUntil: user.premiumUntil,
     createdAt: user.createdAt
@@ -108,28 +108,30 @@ export const logoutController = asyncHandler(async (req, res) => {
 });
 
 export const getuserController = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.userid);
+  const user = await User.findById(req.userid).populate("prompts");
   return res.status(200).json({ message: "User fetched successfully", user: {
     username: user!.username,
     email: user!.email,
     role: user!.role,
-    posts: user!.posts,
+    posts: user!.prompts,
     reputation: user!.reputation,
     premiumUntil: user!.premiumUntil,
-    createdAt: user!.createdAt
+    createdAt: user!.createdAt,
+    userid: user!._id
   } });
 });
 
 
 export const getOtherUserController = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).populate("prompts");
   return res.status(200).json({ message: "User fetched successfully", user: {
     username: user!.username,
     email: user!.email,
     role: user!.role,
-    posts: user!.posts,
+    posts: user!.prompts,
     reputation: user!.reputation,
     premiumUntil: user!.premiumUntil,
-    createdAt: user!.createdAt
+    createdAt: user!.createdAt,
+    userid: user!._id
   } });
 });

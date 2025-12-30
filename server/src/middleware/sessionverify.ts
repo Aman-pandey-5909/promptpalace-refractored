@@ -8,6 +8,10 @@ export const sessionVerify = asyncHandler(async (req, res, next) => {
     if (cookie && cookie.length > 0) {
         const token = verifyToken(cookie);
         const user = await User.findOne({ _id: (token as JwtPayload).id });
+        if (!user) {
+            res.clearCookie("session");
+            return res.status(401).json({ message: "Unauthorized" });
+        }
         req.username = user!.username;
         req.userid = user!._id;
         next();

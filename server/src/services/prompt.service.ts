@@ -6,9 +6,10 @@ export const getPrompts = async () => {
     const returnVal = prompts.map((prompt)=>{
         return {
             id: prompt._id,
+            author: prompt.author,
             authorName: prompt.authorName,
-            titleSlug: prompt.titleMasked,
-            descriptionSlug: prompt.descriptionMasked,
+            titleMasked: prompt.titleMasked,
+            descriptionMasked: prompt.descriptionMasked,
             likes: prompt.likes,
             tags: prompt.tags
         }
@@ -24,7 +25,9 @@ export const getPromptById = async (id: string) => {
 export const createPrompt = async (data: any) => {
     data.titleMasked = maskify(data.title);
     data.descriptionMasked = maskify(data.description);
+    
     const prompt = await Prompts.create(data);
+    
     return prompt;
 };
  
