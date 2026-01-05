@@ -33,7 +33,7 @@ export const createPromptController = asyncHandler(async (req, res) => {
 export const getPromptByIdController = asyncHandler(async (req, res) => {
   // console.log(req.user);
   const prompt = await getPromptById(req.params.id);
-  console.log(prompt);
+  // console.log(prompt);
   return res
     .status(200)
     .json({ message: "Prompt fetched successfully", prompt });

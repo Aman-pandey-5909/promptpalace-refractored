@@ -1,9 +1,11 @@
 "use client";
+import { useOptions } from "@/stores/userStore";
 import React from "react";
 import { useRef } from "react";
 
-const EditDelete = ({editHandler, deleteHandler}: {editHandler: () => void, deleteHandler: () => void}) => {
+const EditDelete = ({setEditHandler, DeleteHandler}: {setEditHandler: any, DeleteHandler: any}) => {
   const toggleFloatBox = useRef<HTMLDivElement>(null);
+  // const setEditComment = useOptions((state) => state.setEditComment);
   return (
     <React.Fragment>
       <div
@@ -12,13 +14,9 @@ const EditDelete = ({editHandler, deleteHandler}: {editHandler: () => void, dele
         className="w-fit"
       >
         •••
-        <span
-          ref={toggleFloatBox}
-          
-          className="hidden"
-        >
-          <button className="text-2xl border px-2" onClick={editHandler}>🖋️</button>
-          <button className="text-2xl border px-2" onClick={deleteHandler}>🗑️</button>
+        <span ref={toggleFloatBox} className="hidden">
+          <button className="text-2xl border px-2" onClick={setEditHandler}>🖋️</button>
+          <button className="text-2xl border px-2" onClick={DeleteHandler}>🗑️</button>
         </span>
       </div>
     </React.Fragment>

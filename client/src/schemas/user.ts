@@ -1,6 +1,7 @@
 import { PromptCardProps } from "@/components/prompt/PromptCard";
 
 export interface User {
+  userid : string
   username: string;
   email: string;
   role: string;

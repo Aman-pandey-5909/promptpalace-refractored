@@ -1,5 +1,5 @@
 'use client'
-import { useUser } from "@/stores/userStore";
+import { useOptions, useUser } from "@/stores/userStore";
 import EditDelete from "../Button/EditDelete";
 
 const PreviewPrompt = ({
@@ -23,7 +23,7 @@ const PreviewPrompt = ({
   editPostHandler: () => void
   deletePostHandler: () => void
 }) => {
-  const user = useUser((state: any) => state.user);
+
   
   return (
     <div className="border my-2">
@@ -33,7 +33,6 @@ const PreviewPrompt = ({
       <div>Tags: {tags.join(", ")}</div>
       <div>Likes: {likes.length}</div>
       <div className="cursor-pointer text-blue-500" onClick={onReadMore}>read more...</div>
-      {author === user?.userid && <EditDelete editHandler={editPostHandler} deleteHandler={deletePostHandler} />}
     </div>
   );
 };
